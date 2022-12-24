@@ -4,7 +4,6 @@ module Crummy
   class StandardRenderer
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TagHelper unless self.included_modules.include?(ActionView::Helpers::TagHelper)
-    ActionView::Helpers::TagHelper::BOOLEAN_ATTRIBUTES.merge([:itemscope].to_set)
 
     # Render the list of crumbs as either html or xml
     #
@@ -68,7 +67,7 @@ module Crummy
         options[:ul_id] ||= Crummy.configuration.ul_id
         options[:ul_id] = nil if options[:ul_id].blank?
 
-        crumb_string = crumbs.map{|crumb|local_global.call(crumb, options, :right_side) ? nil : 
+        crumb_string = crumbs.map{|crumb|local_global.call(crumb, options, :right_side) ? nil :
                         crumb_to_html_list(crumb,
                                            local_global.call(crumb, options, :links),
                                            local_global.call(crumb, options, :li_class),
@@ -154,7 +153,7 @@ module Crummy
       else
         html_content = can_link ? link_to((truncate.present? ? name.truncate(truncate) : name), url, options[:link_html_options]) : content_tag(:span, (truncate.present? ? name.truncate(truncate) : name))
       end
-      content_tag(:li, html_content, html_options)+(/<\/li/ =~ separator ? 
+      content_tag(:li, html_content, html_options)+(/<\/li/ =~ separator ?
                                         separator : content_tag(:li, separator) unless separator.blank? || is_last)
     end
 
@@ -168,4 +167,3 @@ module Crummy
     end
   end
 end
-
